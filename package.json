@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "inquirer": "^8.2.2",
+    "jest": "^27.5.1"
+  },
+  "name": "employeerostergen",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixiepucker/employeeRosterGen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pixiepucker/employeeRosterGen/issues"
+  },
+  "homepage": "https://github.com/pixiepucker/employeeRosterGen#readme"
+}

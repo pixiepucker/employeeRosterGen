@@ -4,21 +4,20 @@ const Intern = require('./lib/Intern');
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateHTML = require('./src/htmltemplate');
+const { conditionalExpression } = require('@babel/types');
 
-function Index() {
-    this.manager;
-    this.engineer;
-    this.intern;
-}
+//create array to hold employee 'list'
+const employees = [];
 
-Index.prototype.managerPrompts = function(){
+const managerPrompts = function() {
     //add some flare for users, let them know they're adding a manager
     console.log('=============');
     console.log('Add a Manager');
     console.log('=============');
     //prompts for adding manager
     inquirer
-        .prompt({
+        .prompt([{
+            //name prompt
             type: 'text',
             name: 'name',
             message: "Please enter manager's name: (Required)",
@@ -32,6 +31,7 @@ Index.prototype.managerPrompts = function(){
             }
         },
         {
+            //id prompt
             type: 'text',
             name: 'id',
             message: "Please enter manager's ID: (Required)",
@@ -45,6 +45,7 @@ Index.prototype.managerPrompts = function(){
             }
         },
         {
+            //email prompt
             type: 'text',
             name: 'email',
             message: "Please enter manager's email: (Required)",
@@ -58,6 +59,7 @@ Index.prototype.managerPrompts = function(){
             }
         },
         {
+            //office # prompt
             type: 'text',
             name: 'office',
             message: "Please enter manager's office number: (Required)",
@@ -69,16 +71,30 @@ Index.prototype.managerPrompts = function(){
                     return false;
                 }
             }
+        }])
+        .then((res) => {
+            //save response to new Manager! then push into employees arr
+            const manager = new Manager(res.name, res.id, res.email, res.office)
+            employees.push(manager);
+            //check arr
+            console.log(employees);
         })
-        //destructure name id email from prompt obj
-        .then(({ name, id, email }) => {
-            this.manager = new Manager(name,id,email);
-            this.engIntPrompts();
+        .then(()=>{
+            this.getRoles();
+        })
+        .catch(err=> {
+            console.log(err);
         });
 };
 
-Index.prototype.engIntPrompts = function() {
+const getRoles = function() {
 
-}
+};
 
-new Index().managerPrompts();
+//have function that gets the ball rolling! (calls 1st function)
+function start() {
+    console.log("Hi, let's get started :)");
+    managerPrompts();
+};
+
+start();

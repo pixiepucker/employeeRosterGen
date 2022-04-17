@@ -4,7 +4,7 @@ const Intern = require('./lib/Intern');
 const Employee = require('./lib/Employee');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const templateHTML = require('./src/htmltemplate');
+const generateHTML = require('./src/htmltemplate.js');
 
 //create array to hold employee 'list'
 const employees = [];
@@ -74,7 +74,7 @@ const managerPrompts = function() {
         }])
         .then((res) => {
             //save response to new Manager! then push into employees arr
-            const manager = new Manager(res.name, res.id, res.email, res.office)
+            const manager = new Manager(res.name, res.id, res.email, res.office);
             employees.push(manager);
             //check arr
             console.log(employees);
@@ -113,7 +113,7 @@ const getRoles = function() {
                 //let user know that they're done
                 console.log('Finito!');
                 //write file
-                generateHTML(employees);
+                writeHTML(employees);
             }
         })
 };
@@ -283,9 +283,18 @@ function addEngInt () {
         }
     })
 };
+
 //function to write file/generate HTML
-function generateHTML(employees) {
-    console.log(`Check your dist folder for you final product :) !`);
+function writeHTML(employees) {
+    const data = generateHTML(employees);
+
+    fs.writeFile('./dist/index.html',data,err=> {
+        if(err) {
+            console.log(err)
+            return;
+        }
+        console.log(`Your roster is generated! Check the /dist folder for your written files :)`);
+    })
 };
 
 //have function that gets the ball rolling! (calls 1st function)

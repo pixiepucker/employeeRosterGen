@@ -1,10 +1,10 @@
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const Employee = require('./lib/Employee');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateHTML = require('./src/htmltemplate');
-const { conditionalExpression } = require('@babel/types');
+const templateHTML = require('./src/htmltemplate');
 
 //create array to hold employee 'list'
 const employees = [];
@@ -86,10 +86,40 @@ const managerPrompts = function() {
             console.log(err);
         });
 };
-
+//function that will prompt user to select which employee type they'd like to add next
+//engineer or intern?? hmm
 const getRoles = function() {
+    //add flair
+    console.log('===============');
+    console.log('Add Team Member');
+    console.log('===============');
 
+    inquirer
+        .prompt([
+            {
+                type: 'confirm',
+                name: 'confirmNew',
+                message: 'Would you like to add a team member?',
+                default: false
+            }
+        ])
+        .then(function(res) {
+            if (res.confirmNew === true ) {
+                //run function to add an engineer OR intern
+                addEngInt();
+            } else {
+                //let user know that they're done
+                console.log('Finito!');
+                //write file
+                fs.generateHTML(employees);
+            }
+        })
 };
+
+//function to write file/generate HTML
+function generateHTML(employees) {
+    console.log(`You're all done! Check your dist folder for you final product :) !`);
+}
 
 //have function that gets the ball rolling! (calls 1st function)
 function start() {

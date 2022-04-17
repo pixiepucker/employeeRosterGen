@@ -86,6 +86,7 @@ const managerPrompts = function() {
             console.log(err);
         });
 };
+
 //function that will prompt user to select which employee type they'd like to add next
 //engineer or intern?? hmm
 const getRoles = function() {
@@ -116,10 +117,98 @@ const getRoles = function() {
         })
 };
 
+//add engineer or intern function
+function addEngInt () {
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'role',
+                message: 'Is your new member an Engineer or an Intern?'
+                choices: ['Engineer', 'Intern']
+            }
+        ])
+        .then(function(res) {
+            //use switch case to select between choices
+            switch (res.role) {
+                case 'Engineer':
+                    inquirer
+                        .prompt([
+                            //eng name input
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: "Please enter your Engineer's name: (Required)",
+                                validate: nameInput => {
+                                    if (nameInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Engineer's name!");
+                                        return false;
+                                    }
+                                }
+                            },
+                            //eng id input
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: "Please enter your Engineer's ID: (Required)",
+                                validate: idInput => {
+                                    if (idInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Engineer's ID!");
+                                        return false;
+                                    }
+                                }
+                            },
+                            //eng email input
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: "Please enter your Engineer's email: (Required)",
+                                validate: emailInput => {
+                                    if (emailInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Engineer's email!");
+                                        return false;
+                                    }
+                                }
+                            },
+                            //eng github input
+                            {
+                                type: 'input',
+                                name: 'github',
+                                message: "Please enter your Engineer's GitHub: (Required)",
+                                validate: githubInput => {
+                                    if (githubInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Engineer's GitHub!");
+                                        return false;
+                                    }
+                                }
+                            }
+                        ])
+                        .then(function(res) {
+                            //save new Engineer
+                            const engineer = new Engineer(res.name, res.id, res.email, res.github);
+                            //check input
+                            console.log(engineer);
+                            employees.push(engineer);
+                        })
+                        .then(function() {
+                            //run getRoles() to check if user needs to add new team member
+                            getRoles();
+                        })
+            }
+        })
+}
 //function to write file/generate HTML
 function generateHTML(employees) {
     console.log(`You're all done! Check your dist folder for you final product :) !`);
-}
+};
 
 //have function that gets the ball rolling! (calls 1st function)
 function start() {

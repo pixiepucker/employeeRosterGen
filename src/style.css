@@ -1,0 +1,26 @@
+body {
+ background-color: #fffbf5;
+ font-family: 'Monserrat', sans-serif;
+ font-size: 20px;
+ font-weight: light 300;
+}
+
+#h1header {
+    font-family: 'Monserrat', sans-serif;
+    font-weight: 400;
+    background-color: #a0e8c4;
+    background-image: linear-gradient(45deg, #a0e8c4 10%, #d1fce7 52%, #eafff5 80%);
+}
+
+.card {
+    width: 18rem;
+}
+
+#empTitle {
+    color:#0e5e36;
+    font-weight: bold;
+}
+
+a {
+    color:#e07286;
+}

@@ -5,7 +5,6 @@ const Employee = require('./lib/Employee');
 const inquirer = require('inquirer');
 const fs = require('fs');
 const templateHTML = require('./src/htmltemplate');
-const { beforeAll } = require('@jest/globals');
 
 //create array to hold employee 'list'
 const employees = [];
@@ -81,7 +80,8 @@ const managerPrompts = function() {
             console.log(employees);
         })
         .then(()=>{
-            this.getRoles();
+            //run function to see if user wants to add new team member
+            getRoles();
         })
         .catch(err=> {
             console.log(err);
@@ -113,7 +113,7 @@ const getRoles = function() {
                 //let user know that they're done
                 console.log('Finito!');
                 //write file
-                fs.generateHTML(employees);
+                generateHTML(employees);
             }
         })
 };
@@ -125,7 +125,7 @@ function addEngInt () {
             {
                 type: 'list',
                 name: 'role',
-                message: 'Is your new member an Engineer or an Intern?'
+                message: 'Is your new member an Engineer or an Intern?',
                 choices: ['Engineer', 'Intern']
             }
         ])
@@ -204,85 +204,88 @@ function addEngInt () {
                             getRoles();
                         });
                         break;
-                        case 'Intern':
-                            inquirer
-                                .prompt([
-                                    //name input
-                                    {
-                                        type: 'input',
-                                        name: 'name',
-                                        message: "Please enter your Intern's name: (Required)",
-                                        validate: nameInput => {
-                                            if (nameInput) {
-                                                return true;
-                                            } else {
-                                                console.log("Please enter the Intern's name!");
-                                                return false;
-                                            }
-                                        }
-                                    },
-                                    //id input
-                                    {
-                                        type: 'input',
-                                        name: 'id',
-                                        message: "Please enter your Intern's ID: (Required)",
-                                        validate: idInput => {
-                                            if (idInput) {
-                                                return true;
-                                            } else {
-                                                console.log("Please enter the Intern's ID!");
-                                                return false;
-                                            }
-                                        }
-                                    },
-                                    //email input
-                                    {
-                                        type: 'input',
-                                        name: 'email',
-                                        message: "Please enter your Intern's email: (Required)",
-                                        validate: emailInput => {
-                                            if (emailInput) {
-                                                return true;
-                                            } else {
-                                                console.log("Please enter the Intern's email!");
-                                                return false;
-                                            }
-                                        }
-                                    },
-                                    //school input
-                                    {
-                                        type: 'input',
-                                        name: 'school',
-                                        message: "Please enter your Intern's school: (Required)",
-                                        validate: schoolInput => {
-                                            if (schoolInput) {
-                                                return true;
-                                            } else {
-                                                console.log("Please enter the Intern's school information!");
-                                                return false;
-                                            }
-                                        }
+                case 'Intern':
+                    inquirer
+                        .prompt([
+                            //name input
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: "Please enter your Intern's name: (Required)",
+                                validate: nameInput => {
+                                    if (nameInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Intern's name!");
+                                        return false;
                                     }
-                                ])
-                                .then(function(res) {
-                                    //save new intern
-                                    const intern = new Intern(res.name, res.id, res.email, res.school);
-                                    //check input
-                                    console.log(intern);
-                                    //push to employee arr
-                                    employees.push(intern);
-                                })
-                                .then(function() {
-                                    //rerun getRoles();
-                                    getRoles();
-                                });
-                                break;
-            }
-        })
+                                }
+                            },
+                                    //id input
+                            {
+                                type: 'input',
+                                name: 'id',
+                                message: "Please enter your Intern's ID: (Required)",
+                                validate: idInput => {
+                                    if (idInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Intern's ID!");
+                                        return false;
+                                    }
+                                }
+                            },
+                            //email input
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: "Please enter your Intern's email: (Required)",
+                                validate: emailInput => {
+                                    if (emailInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Intern's email!");
+                                        return false;
+                                    }
+                                }
+                            },
+                            //school input
+                            {
+                                type: 'input',
+                                name: 'school',
+                                message: "Please enter your Intern's school: (Required)",
+                                validate: schoolInput => {
+                                    if (schoolInput) {
+                                        return true;
+                                    } else {
+                                        console.log("Please enter the Intern's school information!");
+                                        return false;
+                                    }
+                                }
+                            }
+                            ])
+                        .then(function(res) {
+                            //save new intern
+                            const intern = new Intern(res.name, res.id, res.email, res.school);
+                            //check input
+                            console.log(intern);
+                                //push to employee arr
+                            employees.push(intern);
+                            //check arr
+                            console.log("Here's your team so far!");
+                            console.log(employees);
+                        })
+                        .then(function() {
+                            //rerun getRoles();
+                            getRoles();
+                        });
+                        break;
+        }
+    })
 };
 //function to write file/generate HTML
 function generateHTML(employees) {
-    console.log(`You're all done! Check your dist folder for you final product :) !`);
+    console.log(`Check your dist folder for you final product :) !`);
 };
 
 //have function that gets the ball rolling! (calls 1st function)

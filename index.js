@@ -5,6 +5,7 @@ const Employee = require('./lib/Employee');
 const inquirer = require('inquirer');
 const fs = require('fs');
 const templateHTML = require('./src/htmltemplate');
+const { beforeAll } = require('@jest/globals');
 
 //create array to hold employee 'list'
 const employees = [];
@@ -201,10 +202,84 @@ function addEngInt () {
                         .then(function() {
                             //run getRoles() to check if user needs to add new team member
                             getRoles();
-                        })
+                        });
+                        break;
+                        case 'Intern':
+                            inquirer
+                                .prompt([
+                                    //name input
+                                    {
+                                        type: 'input',
+                                        name: 'name',
+                                        message: "Please enter your Intern's name: (Required)",
+                                        validate: nameInput => {
+                                            if (nameInput) {
+                                                return true;
+                                            } else {
+                                                console.log("Please enter the Intern's name!");
+                                                return false;
+                                            }
+                                        }
+                                    },
+                                    //id input
+                                    {
+                                        type: 'input',
+                                        name: 'id',
+                                        message: "Please enter your Intern's ID: (Required)",
+                                        validate: idInput => {
+                                            if (idInput) {
+                                                return true;
+                                            } else {
+                                                console.log("Please enter the Intern's ID!");
+                                                return false;
+                                            }
+                                        }
+                                    },
+                                    //email input
+                                    {
+                                        type: 'input',
+                                        name: 'email',
+                                        message: "Please enter your Intern's email: (Required)",
+                                        validate: emailInput => {
+                                            if (emailInput) {
+                                                return true;
+                                            } else {
+                                                console.log("Please enter the Intern's email!");
+                                                return false;
+                                            }
+                                        }
+                                    },
+                                    //school input
+                                    {
+                                        type: 'input',
+                                        name: 'school',
+                                        message: "Please enter your Intern's school: (Required)",
+                                        validate: schoolInput => {
+                                            if (schoolInput) {
+                                                return true;
+                                            } else {
+                                                console.log("Please enter the Intern's school information!");
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                ])
+                                .then(function(res) {
+                                    //save new intern
+                                    const intern = new Intern(res.name, res.id, res.email, res.school);
+                                    //check input
+                                    console.log(intern);
+                                    //push to employee arr
+                                    employees.push(intern);
+                                })
+                                .then(function() {
+                                    //rerun getRoles();
+                                    getRoles();
+                                });
+                                break;
             }
         })
-}
+};
 //function to write file/generate HTML
 function generateHTML(employees) {
     console.log(`You're all done! Check your dist folder for you final product :) !`);

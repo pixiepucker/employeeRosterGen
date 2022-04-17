@@ -45,10 +45,10 @@ function generateEng(engineer) {
     <div class="card">
         <div class="card-body">
             <h4 class="card-title" id="empTitle">Engineer</h4>
-                <p class="card-text">Name: <span>${this.name}</span></p>
-                <p class="card-text">ID: <span>${this.id}</span></p>
-                <p class="card-text">Contact through: <span><a href='email1@gmail.com'>${this.email}</a></span></p>
-                <p class="card-text">GitHub: <span><a href="https://github.com/twitter">${this.github}</a></span></p>
+                <p class="card-text">Name: <span>${engineer.name}</span></p>
+                <p class="card-text">ID: <span>${engineer.id}</span></p>
+                <p class="card-text">Contact through: <span><a href='email1@gmail.com'>${engineer.email}</a></span></p>
+                <p class="card-text">GitHub: <span><a href="https://github.com/twitter">${engineer.github}</a></span></p>
         </div>
     </div>
     `;
@@ -64,10 +64,10 @@ function generateInt(intern) {
     <div class="card">
         <div class="card-body">
             <h4 class="card-title" id="empTitle">Intern</h5>
-                <p class="card-text">Name: <span>${this.name}</span></p>
-                <p class="card-text">ID: <span>${this.id}</span></p>
-                <p class="card-text">Contact through: <span><a href='email1@gmail.com'>${this.email}</a></span></p>
-                <p class="card-text">School: <span>${this.school}</span></p>
+                <p class="card-text">Name: <span>${intern.name}</span></p>
+                <p class="card-text">ID: <span>${intern.id}</span></p>
+                <p class="card-text">Contact through: <span><a href='email1@gmail.com'>${intern.email}</a></span></p>
+                <p class="card-text">School: <span>${intern.school}</span></p>
         </div>
     </div>
     `;
